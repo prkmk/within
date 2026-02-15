@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#1a1a1a"/>
+  <circle cx="256" cy="256" r="180" fill="#ffd050"/>
+  <!-- Infinity symbol -->
+  <path d="M 180 256 Q 160 220, 140 256 Q 160 292, 180 256 M 332 256 Q 352 220, 372 256 Q 352 292, 332 256 M 180 256 Q 200 240, 256 256 Q 312 272, 332 256" 
+        stroke="#1a1a1a" stroke-width="12" fill="none" stroke-linecap="round"/>
+</svg>
