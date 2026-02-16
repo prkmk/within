@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a1a1a">
-    <meta name="description" content="Within - A mindful toolkit for staying present: Loop, Path, and Breath">
+    <meta name="description" content="Within - A mindful toolkit: Timer, Habits, and Calm Down">
     <title>Within</title>
     
     <!-- PWA Manifest -->
@@ -28,10 +28,25 @@
             --bg-primary: #0f0f0f;
             --bg-secondary: #1a1a1a;
             --accent-primary: #ffd050;
-            --accent-secondary: #ff6b6b;
+            --accent-secondary: #ff8D1B;
+            --danger: #ff5050;
+            --blue: #505FFF;
             --text-primary: #f5f5f5;
             --text-secondary: #a0a0a0;
             --border: #2a2a2a;
+            --disabled-opacity: 0.4;
+            --radius: 1.125rem / 1rem;
+            --text-xs: 0.5rem;
+            --text-sm: 0.75rem;
+            --text-md: 1rem;
+            --text-lg: 1.5rem;
+            --text-xl: 2rem;
+            --padding-sm: 0.75rem;
+            --padding-md: 1rem;
+            --padding-lg: 1.5rem;
+            --button-height: 4rem;
+            --line-sm: 0.125rem;
+            --line-md: 0.25rem;
         }
 
         * {
@@ -45,15 +60,16 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            padding-bottom: 80px;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(255, 208, 80, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
+            padding-bottom: var(--button-height);
+            /* background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 208, 80, 0.2) 0%, transparent 100%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.2) 0%, transparent 100%),
+                radial-gradient(circle at 40% 60%, rgba(68, 61, 252, 0.2) 0%, transparent 100%); */
         }
 
         .page {
             display: none;
-            padding: 24px 20px;
+            padding: var(--padding-lg);
             max-width: 500px;
             margin: 0 auto;
             animation: fadeIn 0.3s ease;
@@ -64,24 +80,24 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(1rem); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
             font-family: 'Fraunces', serif;
-            font-size: 2rem;
+            font-size: var(--text-xl);
             font-weight: 300;
             font-style: italic;
-            margin-bottom: 32px;
+            margin-bottom: var(--padding-lg);
             color: var(--text-primary);
             letter-spacing: -0.02em;
         }
 
         .input-row {
             display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
+            gap: 0.75rem;
+            margin-bottom: var(--padding-lg);
         }
 
         .input-group {
@@ -94,7 +110,7 @@
             text-transform: uppercase;
             letter-spacing: 0.15em;
             color: var(--text-secondary);
-            margin-bottom: 12px;
+            margin-bottom: var(--padding-sm);
             font-weight: 500;
         }
 
@@ -102,19 +118,19 @@
             display: flex;
             align-items: center;
             background: var(--bg-secondary);
-            border-radius: 16px;
-            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            border: var(--line-sm) solid var(--border);
             overflow: hidden;
         }
 
         .stepper-btn {
             flex: 0 0 auto;
-            width: 56px;
-            height: 56px;
-            background: var(--bg-primary);
+            width: calc(var(--button-height) - 2 * var(--line-sm));
+            height: calc(var(--button-height) - 2 * var(--line-sm));
+            background: none;
             color: var(--text-primary);
             border: none;
-            font-size: 2rem;
+            font-size: var(--text-xl);
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
@@ -125,10 +141,6 @@
             font-weight: 300;
         }
 
-        .stepper-btn:hover:not(:disabled) {
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-        }
 
         .stepper-btn:active:not(:disabled) {
             transform: scale(0.95);
@@ -137,32 +149,31 @@
         .stepper-btn:disabled {
             color: var(--text-secondary);
             cursor: not-allowed;
-            opacity: 0.3;
+            opacity: var(--disabled-opacity);
         }
 
         .stepper-value {
             flex: 1;
             text-align: center;
             font-family: 'Fraunces', serif;
-            font-size: 2rem;
+            font-size: var(--text-xl);
             font-weight: 600;
             color: var(--text-primary);
-            padding: 12px 16px;
-            min-width: 60px;
+            padding: var(--padding-sm) auto;
+            min-width: var(--button-height);
         }
 
         .circular-timer {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 32px 0;
-            padding: 20px;
+            margin: var(--padding-lg) 0;
         }
 
         .circle-container {
             position: relative;
-            width: 280px;
-            height: 280px;
+            width: 450px;
+            height: 450px;
         }
 
         .circle-svg {
@@ -174,14 +185,13 @@
         .circle-bg {
             fill: none;
             stroke: var(--border);
-            stroke-width: 3;
+            stroke-width: var(--line-sm);
         }
 
         .circle-segment {
             fill: none;
             stroke: var(--accent-primary);
-            stroke-width: 3;
-            opacity: 0.8;
+            stroke-width: var(--line-sm);
             stroke-linecap: round;
         }
 
@@ -196,7 +206,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
-            gap: 12px;
+            gap: var(--padding-sm);
             z-index: 10;
         }
 
@@ -207,12 +217,14 @@
             transition: all 0.2s ease;
             position: relative;
             overflow: hidden;
+            min-height: var(--button-height);
+            min-width: var(--button-height);
         }
 
         .btn-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 16px;
+            width: var(--text-xl);
+            height: var(--text-xl);
+            border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -220,8 +232,8 @@
         }
 
         .btn-svg {
-            width: 28px;
-            height: 28px;
+            width: var(--text-xl);
+            height: var(--text-xl);
         }
 
         .btn-svg path {
@@ -234,7 +246,7 @@
         }
 
         .btn-primary:hover {
-            background: #ffdb70;
+            /* background: #ffdb70; */
             transform: scale(1.05);
         }
 
@@ -244,13 +256,11 @@
 
         .btn-secondary {
             background: var(--bg-secondary);
-            color: var(--accent-secondary);
-            border: 2px solid var(--accent-secondary);
+            color: var(--accent-primary);
+            border: var(--line-sm) solid var(--accent-primary);
         }
 
         .btn-secondary:hover {
-            background: var(--accent-secondary);
-            color: var(--bg-primary);
             transform: scale(1.05);
         }
 
@@ -258,8 +268,407 @@
             transform: scale(0.95);
         }
 
+        .btn-danger {
+            background: var(--bg-secondary);
+            color: var(--danger);
+            border: var(--line-sm) solid var(--danger);
+        }
+
+        .btn-danger:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-danger:active {
+            transform: scale(0.95);
+        }
+
         .hidden {
             display: none !important;
+        }
+
+        /* Habits Page Styles */
+        .habits-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 80px;
+        }
+
+        .habit-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            position: relative;
+        }
+
+        .habit-card:active {
+            transform: scale(0.98);
+        }
+
+        .habit-card.completed-today {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .habit-card.broken {
+            opacity: 0.7;
+        }
+
+        .habit-progress {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            position: relative;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-bg {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 4;
+        }
+
+        .progress-ring-fill {
+            fill: none;
+            stroke: var(--accent-primary);
+            stroke-width: 4;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.3s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .restart-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            color: var(--accent-secondary);
+        }
+
+        .habit-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .habit-title {
+            font-family: 'Fraunces', serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .habit-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .habit-streak {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .streak-number {
+            font-family: 'Fraunces', serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .streak-unit {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .streak-icon {
+            width: 24px;
+            height: 24px;
+            margin-top: 4px;
+        }
+
+        .btn-add-habit {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 208, 80, 0.3);
+            transition: all 0.2s ease;
+            z-index: 50;
+        }
+
+        .btn-add-habit:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-add-habit:active {
+            transform: scale(0.95);
+        }
+
+        /* Context Menu */
+        .context-menu {
+            position: fixed;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 8px;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            min-width: 150px;
+        }
+
+        .context-menu-item {
+            width: 100%;
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .context-menu-item:hover {
+            background: var(--bg-primary);
+        }
+
+        .context-menu-item.danger {
+            color: var(--accent-secondary);
+        }
+
+        .context-menu-item svg {
+            stroke: currentColor;
+        }
+
+        /* Modal Updates for Habits */
+        .modal-header {
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        .frequency-input {
+            display: flex;
+            justify-content: center;
+        }
+
+        .stepper-wrapper-modal {
+            display: flex;
+            align-items: center;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            overflow: hidden;
+        }
+
+        .stepper-btn-modal {
+            width: 56px;
+            height: 56px;
+            background: transparent;
+            color: var(--text-primary);
+            border: none;
+            font-size: 1.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+        }
+
+        .stepper-btn-modal:hover:not(:disabled) {
+            background: var(--border);
+        }
+
+        .stepper-btn-modal:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .stepper-value-modal {
+            font-family: 'Fraunces', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            padding: 12px 32px;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .type-toggle {
+            display: flex;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            overflow: hidden;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .type-btn.active {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .btn-modal-cancel,
+        .btn-modal-save {
+            flex: 1;
+            padding: 16px;
+            border-radius: 12px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-modal-cancel {
+            background: transparent;
+            color: var(--accent-secondary);
+        }
+
+        .btn-modal-cancel:hover {
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .btn-modal-save {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .btn-modal-save:hover {
+            background: #ffdb70;
+        }
+
+        /* Calm Down Page Styles */
+
+        .breath-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 450px;
+        }
+
+        .breath-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: var(--text-sm);
+            height: var(--text-sm);
+            border-radius: 50%;
+            background: var(--accent-primary);
+            filter: blur(var(--text-xl));
+            opacity: var(--disabled-opacity);
+            transition: width 0.05s linear, height 0.05s linear;
+        }
+
+        .breath-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--padding-lg);
+        }
+
+        .breath-phase {
+            font-family: 'Fraunces', serif;
+            font-size: var(--text-xl);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .breath-dots {
+            display: flex;
+            gap: var(--text-sm);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .breath-dot {
+            width: var(--text-sm);
+            height: var(--text-sm);
+            border-radius: 50%;
+            border: var(--line-sm) solid var(--border);
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .breath-dot.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
         }
 
         /* Bottom Navigation */
@@ -268,11 +677,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
-            padding: 12px 0;
             z-index: 100;
         }
 
@@ -281,15 +687,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            padding: 8px;
+            justify-content: center;
+            height: var(--button-height);
             cursor: pointer;
             transition: all 0.2s ease;
             border: none;
             background: transparent;
             color: var(--text-secondary);
             text-transform: uppercase;
-            font-size: 0.625rem;
+            font-size: var(--text-sm);
             letter-spacing: 0.1em;
         }
 
@@ -302,8 +708,8 @@
         }
 
         .nav-icon {
-            width: 24px;
-            height: 24px;
+            width: var(--text-lg);
+            height: var(--text-lg);
         }
 
         .nav-icon path {
@@ -318,60 +724,12 @@
         .pulse .circle-segment {
             animation: pulse 0.6s ease;
         }
-
-        @media (max-width: 400px) {
-            .circle-container {
-                width: 240px;
-                height: 240px;
-            }
-
-            .center-time {
-                font-size: 2rem;
-            }
-
-            .stepper-value {
-                font-size: 2rem;
-            }
-
-            h1 {
-                font-size: 1.75rem;
-            }
-        }
-
-        /* PWA install prompt */
-        .install-prompt {
-            position: fixed;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            padding: 16px 24px;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            z-index: 1000;
-            transition: transform 0.3s ease;
-            max-width: 90%;
-        }
-
-        .install-prompt.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .install-prompt button {
-            padding: 8px 16px;
-            font-size: 0.75rem;
-        }
     </style>
 </head>
 <body>
-    <!-- Loop Page (formerly Timer) -->
-    <div class="page active" id="loopPage">
-        <h1>Loop ∞</h1>
+    <!-- Timer Page -->
+    <div class="page active" id="timerPage">
+        <h1>Timer</h1>
 
         <div class="input-row">
             <div class="input-group">
@@ -403,24 +761,24 @@
                 </svg>
                 <div class="center-controls">
                     <button class="btn-icon btn-primary" id="startBtn">
-                        <svg class="btn-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18.8906 12.846C18.5371 14.189 16.8667 15.138 13.5257 17.0361C10.296 18.8709 8.6812 19.7884 7.37983 19.4196C6.8418 19.2671 6.35159 18.9776 5.95624 18.5787C5 17.6139 5 15.7426 5 12C5 8.2574 5 6.3861 5.95624 5.42132C6.35159 5.02245 6.8418 4.73288 7.37983 4.58042C8.6812 4.21165 10.296 5.12907 13.5257 6.96393C16.8667 8.86197 18.5371 9.811 18.8906 11.154C19.0365 11.7084 19.0365 12.2916 18.8906 12.846Z" fill="currentColor"/>
+                        <svg class="btn-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 6.47331C11 5.60749 13.0002 6.76264 17 9.07195L20 10.8034C23.9997 13.1126 25.9997 14.2678 26 15.9997C26 17.7317 23.9999 18.8866 20 21.196L17 22.9284C13.0001 25.2378 11 26.3921 9.5 25.526C8.00011 24.66 8 22.3508 8 17.7321V14.2682C8 9.64944 8 7.33934 9.5 6.47331Z" fill="currentColor"/>
                         </svg>
                     </button>
                     <button class="btn-icon btn-primary hidden" id="pauseBtn">
-                        <svg class="btn-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 6C2 4.11438 2 3.17157 2.58579 2.58579C3.17157 2 4.11438 2 6 2C7.88562 2 8.82843 2 9.41421 2.58579C10 3.17157 10 4.11438 10 6V18C10 19.8856 10 20.8284 9.41421 21.4142C8.82843 22 7.88562 22 6 22C4.11438 22 3.17157 22 2.58579 21.4142C2 20.8284 2 19.8856 2 18V6Z" fill="currentColor"/>
-                            <path d="M14 6C14 4.11438 14 3.17157 14.5858 2.58579C15.1716 2 16.1144 2 18 2C19.8856 2 20.8284 2 21.4142 2.58579C22 3.17157 22 4.11438 22 6V18C22 19.8856 22 20.8284 21.4142 21.4142C20.8284 22 19.8856 22 18 22C16.1144 22 15.1716 22 14.5858 21.4142C14 20.8284 14 19.8856 14 18V6Z" fill="currentColor"/>
+                        <svg class="btn-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 6C12.6569 6 14 7.34315 14 9V23C14 24.6569 12.6569 26 11 26C9.34315 26 8 24.6569 8 23V9C8 7.34315 9.34315 6 11 6Z" fill="currentColor"/>
+                            <path d="M21 6C22.6569 6 24 7.34315 24 9V23C24 24.6569 22.6569 26 21 26C19.3431 26 18 24.6569 18 23V9C18 7.34315 19.3431 6 21 6Z" fill="currentColor"/>
                         </svg>
                     </button>
-                    <button class="btn-icon btn-secondary hidden" id="stopBtn">
-                        <svg class="btn-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" fill="currentColor"/>
+                    <button class="btn-icon btn-danger hidden" id="stopBtn">
+                        <svg class="btn-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 8C19.7712 8 21.6566 8.0003 22.8281 9.17188C23.9997 10.3434 24 12.2288 24 16C24 19.7712 23.9997 21.6566 22.8281 22.8281C21.6566 23.9997 19.7712 24 16 24C12.2288 24 10.3434 23.9997 9.17188 22.8281C8.0003 21.6566 8 19.7712 8 16C8 12.2288 8.0003 10.3434 9.17188 9.17188C10.3434 8.0003 12.2288 8 16 8Z" fill="currentColor"/>
                         </svg>
                     </button>
                     <button class="btn-icon btn-primary hidden" id="continueBtn">
-                        <svg class="btn-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18.8906 12.846C18.5371 14.189 16.8667 15.138 13.5257 17.0361C10.296 18.8709 8.6812 19.7884 7.37983 19.4196C6.8418 19.2671 6.35159 18.9776 5.95624 18.5787C5 17.6139 5 15.7426 5 12C5 8.2574 5 6.3861 5.95624 5.42132C6.35159 5.02245 6.8418 4.73288 7.37983 4.58042C8.6812 4.21165 10.296 5.12907 13.5257 6.96393C16.8667 8.86197 18.5371 9.811 18.8906 11.154C19.0365 11.7084 19.0365 12.2916 18.8906 12.846Z" fill="currentColor"/>
+                        <svg class="btn-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 6.47331C11 5.60749 13.0002 6.76264 17 9.07195L20 10.8034C23.9997 13.1126 25.9997 14.2678 26 15.9997C26 17.7317 23.9999 18.8866 20 21.196L17 22.9284C13.0001 25.2378 11 26.3921 9.5 25.526C8.00011 24.66 8 22.3508 8 17.7321V14.2682C8 9.64944 8 7.33934 9.5 6.47331Z" fill="currentColor"/>
                         </svg>
                     </button>
                 </div>
@@ -428,51 +786,139 @@
         </div>
     </div>
 
-    <!-- Path Page (formerly Habits) -->
-    <div class="page" id="pathPage">
-        <h1>Path</h1>
-        <p style="color: var(--text-secondary); text-align: center; margin-top: 48px; font-style: italic;">
-            Coming soon...
-        </p>
+    <!-- Habits Page -->
+    <div class="page" id="habitsPage">
+        <h1>Habits</h1>
+
+        <div id="habitsList" class="habits-list">
+            <!-- Habits will be rendered here -->
+        </div>
+
+        <button class="btn-add-habit" id="addHabitBtn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+
+        <div class="empty-state hidden" id="emptyStateHabits">
+            <p>No habits yet</p>
+            <p style="font-size: 0.875rem; margin-top: 8px;">Start tracking your first habit</p>
+        </div>
     </div>
 
-    <!-- Breath Page (new) -->
-    <div class="page" id="breathPage">
-        <h1>Breath</h1>
-        <p style="color: var(--text-secondary); text-align: center; margin-top: 48px; font-style: italic;">
-            4-7-8 breathing helper coming soon...
-        </p>
+    <!-- Add/Edit Habit Modal -->
+    <div class="modal hidden" id="habitModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="habitModalTitle">Add Item</h2>
+            </div>
+            
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="habitName" placeholder="Read 20 pages" maxlength="50">
+            </div>
+
+            <div class="form-group">
+                <label>Frequency</label>
+                <div class="frequency-input">
+                    <div class="stepper-wrapper-modal">
+                        <button class="stepper-btn-modal" id="frequencyMinus">−</button>
+                        <div class="stepper-value-modal" id="frequencyValue">1</div>
+                        <button class="stepper-btn-modal" id="frequencyPlus">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Type</label>
+                <div class="type-toggle">
+                    <button class="type-btn active" data-type="daily" id="dailyBtn">Daily</button>
+                    <button class="type-btn" data-type="weekly" id="weeklyBtn">Weekly</button>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-modal-cancel" id="habitCancelBtn">Cancel</button>
+                <button class="btn-modal-save" id="habitSaveBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu for Long Press -->
+    <div class="context-menu hidden" id="contextMenu">
+        <button class="context-menu-item" id="editHabitBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Edit
+        </button>
+        <button class="context-menu-item danger" id="deleteHabitBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Delete
+        </button>
+    </div>
+
+    <!-- Calm Down Page -->
+    <div class="page" id="calmPage">
+        <h1>Calm Down</h1>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label>Duration (seconds)</label>
+                <div class="stepper-wrapper">
+                    <button class="stepper-btn" id="durationMinus">−</button>
+                    <div class="stepper-value" id="durationValue">20</div>
+                    <button class="stepper-btn" id="durationPlus">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="breath-container">
+            <div class="breath-circle" id="breathCircle"></div>
+            
+            <div class="breath-content">
+                <div class="breath-phase" id="breathPhase">Inhale</div>
+                <div class="breath-dots" id="breathDots">
+                    <!-- Dots will be rendered here -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <button class="nav-item active" data-page="loopPage">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.5 3.5C15.5 3.5 17 5.25 17 8C17 10.75 15.5 12.5 15.5 12.5M20 1C20 1 22 3.5 22 8C22 12.5 20 15 20 15M2 13V11C2 7.22876 2 5.34315 3.17157 4.17157C4.34315 3 6.22876 3 10 3H11.5C12.8978 3 14.6744 3 15.5 4M7.5 21H16.5C17.9045 21 18.6067 21 19.1111 20.6629C19.3295 20.5226 19.5226 20.3295 19.6629 20.1111C20 19.6067 20 18.9045 20 17.5C20 16.0955 20 15.3933 19.6629 14.8889C19.5226 14.6705 19.3295 14.4774 19.1111 14.3371C18.6067 14 17.9045 14 16.5 14H7.5C6.09554 14 5.39331 14 4.88886 14.3371C4.67048 14.4774 4.47738 14.6705 4.33706 14.8889C4 15.3933 4 16.0955 4 17.5C4 18.9045 4 19.6067 4.33706 20.1111C4.47738 20.3295 4.67048 20.5226 4.88886 20.6629C5.39331 21 6.09554 21 7.5 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <button class="nav-item active" data-page="timerPage">
+            <svg class="nav-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.5 15.5C12.3524 15.5 12.98 15.9095 13.5703 16.5518C13.8717 16.8796 14.1395 17.2418 14.418 17.6221C14.5829 17.8474 14.5829 18.1526 14.418 18.3779C14.1395 18.7582 13.8717 19.1204 13.5703 19.4482C12.98 20.0904 12.3524 20.5 11.5 20.5C10.1193 20.5 9.00007 19.3807 9 18C9 16.6193 10.1193 15.5 11.5 15.5Z" fill="currentColor"/>
+                <path d="M20.5 15.5C21.8807 15.5 23 16.6193 23 18C22.9999 19.3807 21.8807 20.5 20.5 20.5C19.6476 20.5 19.02 20.0904 18.4297 19.4482C18.1283 19.1204 17.8605 18.7582 17.582 18.3779C17.4169 18.1524 17.4169 17.8476 17.582 17.6221C17.8605 17.2418 18.1283 16.8796 18.4297 16.5518C19.02 15.9095 19.6476 15.5 20.5 15.5Z" fill="currentColor"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16 6C16.9282 6 17.3924 6.00032 17.7842 6.02832C19.4403 6.14677 20.9929 6.63048 22.3643 7.39746C22.4554 7.30138 22.5703 7.18748 22.7178 7.04004C23.0463 6.71153 23.2103 6.54693 23.374 6.4375C24.0466 5.98809 24.9241 5.98809 25.5967 6.4375C25.7604 6.54694 25.9245 6.71157 26.2529 7.04004L26.96 7.74707C27.2884 8.07552 27.4531 8.23959 27.5625 8.40332C28.0119 9.07592 28.0119 9.95338 27.5625 10.626C27.4531 10.7897 27.2885 10.9537 26.96 11.2822C26.8125 11.4297 26.6976 11.5436 26.6016 11.6348C27.3688 13.0061 27.8532 14.5585 27.9717 16.2148C27.9997 16.6067 28 17.0714 28 18C28 18.9282 27.9997 19.3924 27.9717 19.7842C27.5814 25.2406 23.2406 29.5814 17.7842 29.9717C17.3924 29.9997 16.9282 30 16 30C15.0714 30 14.6067 29.9997 14.2148 29.9717C8.75852 29.5813 4.41857 25.2405 4.02832 19.7842C4.00032 19.3924 4 18.9282 4 18C4 17.0714 4.00029 16.6067 4.02832 16.2148C4.41871 10.7586 8.75863 6.41869 14.2148 6.02832C14.6067 6.00029 15.0714 6 16 6ZM20.5 13.5C18.8673 13.5 17.7453 14.3406 16.957 15.1982C16.7865 15.3838 16.7009 15.4765 16.6621 15.5107C16.2273 15.8952 15.7727 15.8952 15.3379 15.5107C15.2991 15.4765 15.2135 15.3838 15.043 15.1982C14.2547 14.3406 13.1327 13.5 11.5 13.5C9.01472 13.5 7 15.5147 7 18C7.00007 20.4852 9.01476 22.5 11.5 22.5C13.1326 22.5 14.2547 21.6594 15.043 20.8018C15.2133 20.6164 15.2988 20.5238 15.3379 20.4893C15.7726 20.1051 16.2274 20.1051 16.6621 20.4893C16.7012 20.5238 16.7867 20.6164 16.957 20.8018C17.7453 21.6594 18.8674 22.5 20.5 22.5C22.9852 22.5 24.9999 20.4852 25 18C25 15.5147 22.9853 13.5 20.5 13.5Z" fill="currentColor"/>
+                <path d="M19.5 2C20.3284 2 21 2.67157 21 3.5C21 4.32843 20.3284 5 19.5 5H12.5C11.6716 5 11 4.32843 11 3.5C11 2.67157 11.6716 2 12.5 2H19.5Z" fill="currentColor"/>
             </svg>
-            <span>Loop</span>
+            <span>Timer</span>
         </button>
-        <button class="nav-item" data-page="pathPage">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 2C14 2 14 3.5 16 4.5C18.5 5.5 19 7.5 19 7.5M18 9.5C18 9.5 18.5 11 19.5 12C21 13 22 14 22 14M2 12C2 7.52166 2 5.28249 3.39124 3.89124C4.78249 2.5 7.02166 2.5 11.5 2.5C15.9783 2.5 18.2175 2.5 19.6088 3.89124C21 5.28249 21 7.52166 21 12C21 16.4783 21 18.7175 19.6088 20.1088C18.2175 21.5 15.9783 21.5 11.5 21.5C7.02166 21.5 4.78249 21.5 3.39124 20.1088C2 18.7175 2 16.4783 2 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 8L12 16M12 16L15 13M12 16L9 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- <button class="nav-item" data-page="habitsPage">
+            <svg class="nav-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25.4004 5C25.9579 5 26.2367 5.00042 26.4668 5.05566C27.1981 5.23123 27.7688 5.80191 27.9443 6.5332C27.9996 6.76332 28 7.04206 28 7.59961C28 9.8305 28.0002 10.9466 27.7793 11.8672C27.077 14.7924 24.7924 17.077 21.8672 17.7793C21.0033 17.9866 19.9677 17.9973 18 17.998V25C18 26.1046 17.1046 27 16 27C14.8954 27 14 26.1046 14 25V21.998C12.0323 21.9973 10.9967 21.9866 10.1328 21.7793C7.20762 21.077 4.92298 18.7924 4.2207 15.8672C3.99977 14.9466 4 13.8305 4 11.5996C4 11.0421 4.00042 10.7633 4.05566 10.5332C4.23123 9.80191 4.80191 9.23123 5.5332 9.05566C5.76332 9.00042 6.04206 9 6.59961 9C8.8305 9 9.94657 8.99977 10.8672 9.2207C12.5501 9.62473 14.0203 10.5533 15.0996 11.8252C15.13 11.5758 15.1689 11.3489 15.2207 11.1328C15.923 8.20762 18.2076 5.92298 21.1328 5.2207C22.0534 4.99977 23.1695 5 25.4004 5Z" fill="currentColor"/>
             </svg>
-            <span>Path</span>
-        </button>
-        <button class="nav-item" data-page="breathPage">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3.35288 8.94202C2.48958 6.58312 3.53749 4.8369 5.21865 4.12818C6.39606 3.63904 7.80667 4.23668 8.9941 5.42403C9.44852 5.87846 9.92455 6.35448 10.4 6.8301M20.6471 8.94202C21.5104 6.58312 20.4625 4.8369 18.7814 4.12818C17.6039 3.63904 16.1933 4.23668 15.0059 5.42403C14.5515 5.87846 14.0754 6.35448 13.6 6.8301M13.6 6.8301C11.4802 8.94993 9.91977 8.94993 7.8 6.8301L7.23431 7.39578C6.29923 8.33086 5.83169 8.79841 5.51894 9.35549C5.20619 9.91256 5.06562 10.5368 4.78448 11.7854C4.11588 14.7044 3.78158 16.1639 4.59926 17.082C5.41694 18 6.91369 18 9.90718 18H14.0928C17.0863 18 18.5831 18 19.4007 17.082C20.2184 16.1639 19.8841 14.7044 19.2155 11.7854C18.9344 10.5368 18.7938 9.91256 18.4811 9.35549C18.1683 8.79841 17.7008 8.33086 16.7657 7.39578L16.2 6.8301C15.2 7.8301 14.4 8.0301 13.6 6.8301Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M10 14C10 14 10.5 14.5 12 14.5C13.5 14.5 14 14 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 18V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Habits</span>
+        </button> -->
+        <button class="nav-item" data-page="calmPage">
+            <svg class="nav-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 18C18.5909 18 19.1758 18.1167 19.7217 18.3428C20.2676 18.5689 20.7638 18.9005 21.1816 19.3184C21.5995 19.7362 21.9311 20.2324 22.1572 20.7783C22.3833 21.3242 22.5 21.9091 22.5 22.5C22.5 23.0909 22.3833 23.6758 22.1572 24.2217C21.9311 24.7676 21.5995 25.2638 21.1816 25.6816C20.7638 26.0995 20.2676 26.4311 19.7217 26.6572C19.1758 26.8833 18.5909 27 18 27C17.1716 27 16.5 26.3284 16.5 25.5C16.5 24.6716 17.1716 24 18 24C18.197 24 18.3922 23.9611 18.5742 23.8857C18.7561 23.8104 18.9213 23.6998 19.0605 23.5605C19.1998 23.4213 19.3104 23.2561 19.3857 23.0742C19.4611 22.8922 19.5 22.697 19.5 22.5C19.5 22.303 19.4611 22.1078 19.3857 21.9258C19.3104 21.7439 19.1998 21.5787 19.0605 21.4395C18.9213 21.3002 18.7561 21.1896 18.5742 21.1143C18.3922 21.0389 18.197 21 18 21H5.5C4.67157 21 4 20.3284 4 19.5C4 18.6716 4.67157 18 5.5 18H18Z" fill="currentColor"/>
+                <path d="M23.5 14C24.7856 14 26.0424 14.3815 27.1113 15.0957C28.1802 15.8099 29.0129 16.8251 29.5049 18.0127C29.9969 19.2004 30.1258 20.5077 29.875 21.7686C29.6241 23.0292 29.0056 24.1878 28.0967 25.0967C27.5109 25.6824 26.5604 25.6824 25.9746 25.0967C25.3888 24.5109 25.3888 23.5604 25.9746 22.9746C26.4641 22.4851 26.7976 21.8616 26.9326 21.1826C27.0676 20.5037 26.9983 19.7996 26.7334 19.1602C26.4685 18.5208 26.0198 17.9743 25.4443 17.5898C24.8688 17.2053 24.1922 17 23.5 17H3.5C2.67157 17 2 16.3284 2 15.5C2 14.6716 2.67157 14 3.5 14H23.5Z" fill="currentColor"/>
+                <path d="M22 4C22.5909 4 23.1758 4.1167 23.7217 4.34277C24.2676 4.56892 24.7638 4.9005 25.1816 5.31836C25.5995 5.73622 25.9311 6.23235 26.1572 6.77832C26.3833 7.32421 26.5 7.90914 26.5 8.5C26.5 9.09086 26.3833 9.67579 26.1572 10.2217C25.9311 10.7676 25.5995 11.2638 25.1816 11.6816C24.7638 12.0995 24.2676 12.4311 23.7217 12.6572C23.1758 12.8833 22.5909 13 22 13H7.5C6.67157 13 6 12.3284 6 11.5C6 10.6716 6.67157 10 7.5 10H22C22.197 10 22.3922 9.96112 22.5742 9.88574C22.7561 9.81036 22.9213 9.69979 23.0605 9.56055C23.1998 9.42131 23.3104 9.25613 23.3857 9.07422C23.4611 8.89223 23.5 8.69698 23.5 8.5C23.5 8.30302 23.4611 8.10777 23.3857 7.92578C23.3104 7.74387 23.1998 7.57869 23.0605 7.43945C22.9213 7.30021 22.7561 7.18964 22.5742 7.11426C22.3922 7.03888 22.197 7 22 7C21.1716 7 20.5 6.32843 20.5 5.5C20.5 4.67157 21.1716 4 22 4Z" fill="currentColor"/>
             </svg>
-            <span>Breath</span>
+            <span>Calm Down</span>
         </button>
     </nav>
 
-    <div class="install-prompt" id="installPrompt">
+    <!-- <div class="install-prompt" id="installPrompt">
         <span>Install Timer Bell as an app</span>
         <button class="btn-primary" id="installBtn">Install</button>
-    </div>
+    </div> -->
 
     <script>
         // Audio Context for generating bell sounds
@@ -819,6 +1265,648 @@
         updateStepperButtons();
         drawCircleSegments();
         updatePositionMarker(0);
+
+        // ===== HABITS PAGE =====
+        
+        let habits = [];
+        let editingHabitId = null;
+        let frequencyValue = 1;
+        let habitType = 'daily';
+        let longPressTimer = null;
+        let selectedHabitForMenu = null;
+
+        // DOM elements for Habits page
+        const addHabitBtn = document.getElementById('addHabitBtn');
+        const habitModal = document.getElementById('habitModal');
+        const habitsList = document.getElementById('habitsList');
+        const emptyStateHabits = document.getElementById('emptyStateHabits');
+        const habitModalTitle = document.getElementById('habitModalTitle');
+        const habitName = document.getElementById('habitName');
+        const habitCancelBtn = document.getElementById('habitCancelBtn');
+        const habitSaveBtn = document.getElementById('habitSaveBtn');
+        const frequencyValueEl = document.getElementById('frequencyValue');
+        const frequencyPlus = document.getElementById('frequencyPlus');
+        const frequencyMinus = document.getElementById('frequencyMinus');
+        const dailyBtn = document.getElementById('dailyBtn');
+        const weeklyBtn = document.getElementById('weeklyBtn');
+        const contextMenu = document.getElementById('contextMenu');
+        const editHabitBtn = document.getElementById('editHabitBtn');
+        const deleteHabitBtn = document.getElementById('deleteHabitBtn');
+
+        // Load habits from storage
+        async function loadHabits() {
+            try {
+                const result = await window.storage.get('habits', false);
+                if (result) {
+                    habits = JSON.parse(result.value);
+                    renderHabits();
+                }
+            } catch (error) {
+                habits = [];
+                renderHabits();
+            }
+        }
+
+        // Save habits to storage
+        async function saveHabits() {
+            try {
+                await window.storage.set('habits', JSON.stringify(habits), false);
+            } catch (error) {
+                console.error('Failed to save habits:', error);
+            }
+        }
+
+        // Get today's date string
+        function getTodayDate() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        // Get current week string (year-week)
+        function getCurrentWeek() {
+            const d = new Date();
+            d.setHours(0, 0, 0, 0);
+            d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+            const yearStart = new Date(d.getFullYear(), 0, 1);
+            const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return `${d.getFullYear()}-W${weekNo}`;
+        }
+
+        // Get completions for today
+        function getCompletionsToday(habit) {
+            const today = getTodayDate();
+            const completion = habit.completions.find(c => c.date === today);
+            return completion ? completion.count : 0;
+        }
+
+        // Get completions for this week
+        function getCompletionsThisWeek(habit) {
+            const currentWeek = getCurrentWeek();
+            const completion = habit.completions.find(c => c.date === currentWeek);
+            return completion ? completion.count : 0;
+        }
+
+        // Check if habit can be marked
+        function canMarkHabit(habit) {
+            if (habit.isBroken) return false;
+            
+            if (habit.type === 'daily') {
+                const completedToday = getCompletionsToday(habit);
+                return completedToday < habit.timesRequired;
+            } else {
+                const completedThisWeek = getCompletionsThisWeek(habit);
+                return completedThisWeek < habit.timesRequired;
+            }
+        }
+
+        // Calculate streak
+        function calculateStreak(habit) {
+            if (!habit.completions || habit.completions.length === 0) {
+                return 0;
+            }
+
+            let streak = 0;
+            
+            if (habit.type === 'daily') {
+                const today = new Date();
+                let checkDate = new Date(today);
+                
+                for (let i = 0; i < 365; i++) {
+                    const dateStr = checkDate.toISOString().split('T')[0];
+                    const completion = habit.completions.find(c => c.date === dateStr);
+                    
+                    if (completion && completion.count >= habit.timesRequired) {
+                        streak++;
+                        checkDate.setDate(checkDate.getDate() - 1);
+                    } else {
+                        break;
+                    }
+                }
+            } else {
+                // Weekly
+                const currentWeek = getCurrentWeek();
+                let [year, week] = currentWeek.split('-W').map(Number);
+                
+                for (let i = 0; i < 52; i++) {
+                    const weekStr = `${year}-W${week}`;
+                    const completion = habit.completions.find(c => c.date === weekStr);
+                    
+                    if (completion && completion.count >= habit.timesRequired) {
+                        streak++;
+                        week--;
+                        if (week < 1) {
+                            week = 52;
+                            year--;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            return streak;
+        }
+
+        // Check if streak is broken
+        function checkIfBroken(habit) {
+            if (habit.type === 'daily') {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = yesterday.toISOString().split('T')[0];
+                const yesterdayCompletion = habit.completions.find(c => c.date === yesterdayStr);
+                
+                const today = getTodayDate();
+                const todayCompletion = habit.completions.find(c => c.date === today);
+                
+                // Broken if yesterday wasn't completed and today isn't completed yet
+                return (!yesterdayCompletion || yesterdayCompletion.count < habit.timesRequired) &&
+                       (!todayCompletion || todayCompletion.count < habit.timesRequired);
+            } else {
+                // Weekly
+                const lastWeek = new Date();
+                lastWeek.setDate(lastWeek.getDate() - 7);
+                const lastWeekStr = getCurrentWeek.call({getFullYear: () => lastWeek.getFullYear()});
+                
+                const currentWeek = getCurrentWeek();
+                const currentCompletion = habit.completions.find(c => c.date === currentWeek);
+                
+                return currentCompletion && currentCompletion.count < habit.timesRequired;
+            }
+        }
+
+        // Create circular progress SVG
+        function createProgressCircle(current, total, isBroken) {
+            if (isBroken) {
+                return `
+                    <svg class="restart-icon" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5" 
+                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M3 21v-5h5" 
+                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                `;
+            }
+            
+            if (total === 1) {
+                // Simple checkmark for single completion
+                return current === 1 ? `
+                    <svg viewBox="0 0 48 48" style="width: 48px; height: 48px;">
+                        <circle cx="24" cy="24" r="20" fill="none" stroke="var(--border)" stroke-width="4"/>
+                        <path d="M14 24l6 6 12-12" fill="none" stroke="var(--accent-primary)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                ` : `
+                    <svg viewBox="0 0 48 48" style="width: 48px; height: 48px;">
+                        <circle cx="24" cy="24" r="20" fill="none" stroke="var(--border)" stroke-width="4"/>
+                    </svg>
+                `;
+            }
+            
+            const radius = 20;
+            const circumference = 2 * Math.PI * radius;
+            const progress = (current / total) * 100;
+            const offset = circumference - (progress / 100) * circumference;
+            
+            return `
+                <svg class="progress-ring" viewBox="0 0 48 48">
+                    <circle class="progress-ring-bg" cx="24" cy="24" r="${radius}"/>
+                    <circle class="progress-ring-fill" cx="24" cy="24" r="${radius}"
+                            stroke-dasharray="${circumference}"
+                            stroke-dashoffset="${offset}"/>
+                </svg>
+                <div class="progress-text">${current}/${total}</div>
+            `;
+        }
+
+        // Render habits list
+        function renderHabits() {
+            if (habits.length === 0) {
+                habitsList.innerHTML = '';
+                emptyStateHabits.classList.remove('hidden');
+                return;
+            }
+
+            emptyStateHabits.classList.add('hidden');
+            
+            habitsList.innerHTML = habits.map(habit => {
+                const streak = calculateStreak(habit);
+                const isBroken = habit.isBroken || checkIfBroken(habit);
+                const canMark = canMarkHabit(habit);
+                
+                let current, total;
+                if (habit.type === 'daily') {
+                    current = getCompletionsToday(habit);
+                    total = habit.timesRequired;
+                } else {
+                    current = getCompletionsThisWeek(habit);
+                    total = habit.timesRequired;
+                }
+                
+                const completedFully = current >= total;
+                const streakUnit = habit.type === 'daily' ? 'DAYS' : 'WEEKS';
+                
+                let metaText = habit.type === 'daily' ? 'DAILY' : 'WEEKLY';
+                if (habit.timesRequired > 1) {
+                    metaText = habit.type === 'daily' ? 
+                        `${habit.timesRequired}X / DAY` : 
+                        `${habit.timesRequired}X / WEEK`;
+                }
+                
+                return `
+                    <div class="habit-card ${completedFully ? 'completed-today' : ''} ${isBroken ? 'broken' : ''}" 
+                         data-id="${habit.id}"
+                         ontouchstart="handleTouchStart(event, '${habit.id}')"
+                         ontouchend="handleTouchEnd(event)"
+                         ontouchmove="handleTouchEnd(event)"
+                         onmousedown="handleTouchStart(event, '${habit.id}')"
+                         onmouseup="handleTouchEnd(event)"
+                         onmouseleave="handleTouchEnd(event)"
+                         onclick="handleHabitClick('${habit.id}')">
+                        <div class="habit-progress">
+                            ${createProgressCircle(current, total, isBroken)}
+                        </div>
+                        <div class="habit-info">
+                            <div class="habit-title">${habit.name}</div>
+                            <div class="habit-meta">${metaText}</div>
+                        </div>
+                        <div class="habit-streak">
+                            <div class="streak-number">${streak}</div>
+                            <div class="streak-unit">${streakUnit}</div>
+                            ${isBroken ? `
+                                <svg class="streak-icon" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2.69l5 9.5C17 15.53 14.76 18 12 18s-5-2.47-5-5.81l5-9.5z" 
+                                          fill="#6B9EFF" stroke="#6B9EFF" stroke-width="2"/>
+                                </svg>
+                            ` : `
+                                <svg class="streak-icon" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2s-4 4.5-4 8c0 2.21 1.79 4 4 4s4-1.79 4-4c0-3.5-4-8-4-8z" 
+                                          fill="#FFD050" stroke="#FFD050" stroke-width="2"/>
+                                    <path d="M12 10c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z" fill="#FF8800"/>
+                                </svg>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Handle touch start (for long press)
+        window.handleTouchStart = function(event, habitId) {
+            selectedHabitForMenu = habitId;
+            longPressTimer = setTimeout(() => {
+                event.preventDefault();
+                const rect = event.target.closest('.habit-card').getBoundingClientRect();
+                showContextMenu(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            }, 500);
+        };
+
+        // Handle touch end
+        window.handleTouchEnd = function(event) {
+            if (longPressTimer) {
+                clearTimeout(longPressTimer);
+                longPressTimer = null;
+            }
+        };
+
+        // Handle habit click
+        window.handleHabitClick = function(habitId) {
+            const habit = habits.find(h => h.id === habitId);
+            if (!habit || !canMarkHabit(habit)) return;
+            
+            markHabit(habitId);
+        };
+
+        // Show context menu
+        function showContextMenu(x, y) {
+            contextMenu.style.left = `${x}px`;
+            contextMenu.style.top = `${y}px`;
+            contextMenu.style.transform = 'translate(-50%, -50%)';
+            contextMenu.classList.remove('hidden');
+            
+            // Close on outside click
+            setTimeout(() => {
+                document.addEventListener('click', closeContextMenu);
+            }, 100);
+        }
+
+        // Close context menu
+        function closeContextMenu() {
+            contextMenu.classList.add('hidden');
+            document.removeEventListener('click', closeContextMenu);
+        }
+
+        // Mark habit as complete
+        async function markHabit(habitId) {
+            const habit = habits.find(h => h.id === habitId);
+            if (!habit) return;
+
+            const dateKey = habit.type === 'daily' ? getTodayDate() : getCurrentWeek();
+            let completion = habit.completions.find(c => c.date === dateKey);
+            
+            if (completion) {
+                completion.count++;
+            } else {
+                habit.completions.push({ date: dateKey, count: 1 });
+            }
+
+            // Update broken status
+            habit.isBroken = false;
+
+            await saveHabits();
+            renderHabits();
+        }
+
+        // Open add modal
+        if (addHabitBtn) {
+            addHabitBtn.addEventListener('click', () => {
+                editingHabitId = null;
+                habitModalTitle.textContent = 'Add Item';
+                habitName.value = '';
+                frequencyValue = 1;
+                frequencyValueEl.textContent = '1';
+                habitType = 'daily';
+                dailyBtn.classList.add('active');
+                weeklyBtn.classList.remove('active');
+                habitModal.classList.remove('hidden');
+            });
+        }
+
+        // Close modal
+        if (habitCancelBtn) {
+            habitCancelBtn.addEventListener('click', () => {
+                habitModal.classList.add('hidden');
+            });
+        }
+
+        // Frequency stepper
+        if (frequencyPlus) {
+            frequencyPlus.addEventListener('click', () => {
+                if (frequencyValue < 7) {
+                    frequencyValue++;
+                    frequencyValueEl.textContent = frequencyValue;
+                }
+            });
+        }
+
+        if (frequencyMinus) {
+            frequencyMinus.addEventListener('click', () => {
+                if (frequencyValue > 1) {
+                    frequencyValue--;
+                    frequencyValueEl.textContent = frequencyValue;
+                }
+            });
+        }
+
+        // Type toggle
+        if (dailyBtn) {
+            dailyBtn.addEventListener('click', () => {
+                habitType = 'daily';
+                dailyBtn.classList.add('active');
+                weeklyBtn.classList.remove('active');
+            });
+        }
+
+        if (weeklyBtn) {
+            weeklyBtn.addEventListener('click', () => {
+                habitType = 'weekly';
+                weeklyBtn.classList.add('active');
+                dailyBtn.classList.remove('active');
+            });
+        }
+
+        // Save habit
+        if (habitSaveBtn) {
+            habitSaveBtn.addEventListener('click', async () => {
+                const name = habitName.value.trim();
+                if (!name) {
+                    alert('Please enter a habit name');
+                    return;
+                }
+
+                if (editingHabitId) {
+                    // Editing always resets streak
+                    const index = habits.findIndex(h => h.id === editingHabitId);
+                    habits[index] = {
+                        id: editingHabitId,
+                        name,
+                        type: habitType,
+                        timesRequired: frequencyValue,
+                        completions: [],
+                        isBroken: false
+                    };
+                } else {
+                    // New habit
+                    habits.push({
+                        id: Date.now().toString(),
+                        name,
+                        type: habitType,
+                        timesRequired: frequencyValue,
+                        completions: [],
+                        isBroken: false
+                    });
+                }
+
+                await saveHabits();
+                renderHabits();
+                habitModal.classList.add('hidden');
+            });
+        }
+
+        // Edit habit from context menu
+        if (editHabitBtn) {
+            editHabitBtn.addEventListener('click', () => {
+                const habit = habits.find(h => h.id === selectedHabitForMenu);
+                if (!habit) return;
+
+                editingHabitId = habit.id;
+                habitModalTitle.textContent = 'Edit Item';
+                habitName.value = habit.name;
+                frequencyValue = habit.timesRequired;
+                frequencyValueEl.textContent = habit.timesRequired;
+                habitType = habit.type;
+                
+                if (habit.type === 'daily') {
+                    dailyBtn.classList.add('active');
+                    weeklyBtn.classList.remove('active');
+                } else {
+                    weeklyBtn.classList.add('active');
+                    dailyBtn.classList.remove('active');
+                }
+
+                habitModal.classList.remove('hidden');
+                closeContextMenu();
+            });
+        }
+
+        // Delete habit from context menu
+        if (deleteHabitBtn) {
+            deleteHabitBtn.addEventListener('click', async () => {
+                if (!confirm('Are you sure you want to delete this habit?')) return;
+                
+                habits = habits.filter(h => h.id !== selectedHabitForMenu);
+                await saveHabits();
+                renderHabits();
+                closeContextMenu();
+            });
+        }
+
+        // Initialize Habits page
+        if (typeof window.storage !== 'undefined') {
+            loadHabits();
+        }
+
+        // ===== CALM DOWN PAGE (BREATHING) =====
+        
+        let breathingCycleDuration = 20; // seconds
+        let breathingInterval = null;
+        let breathingPhaseTimeout = null;
+
+        // DOM elements for Calm Down page
+        const durationValue = document.getElementById('durationValue');
+        const durationPlus = document.getElementById('durationPlus');
+        const durationMinus = document.getElementById('durationMinus');
+        const breathCircle = document.getElementById('breathCircle');
+        const breathPhase = document.getElementById('breathPhase');
+        const breathDots = document.getElementById('breathDots');
+
+        // Duration stepper
+        if (durationPlus) {
+            durationPlus.addEventListener('click', () => {
+                if (breathingCycleDuration < 60) {
+                    breathingCycleDuration++;
+                    durationValue.textContent = breathingCycleDuration;
+                }
+            });
+        }
+
+        if (durationMinus) {
+            durationMinus.addEventListener('click', () => {
+                if (breathingCycleDuration > 10) {
+                    breathingCycleDuration--;
+                    durationValue.textContent = breathingCycleDuration;
+                }
+            });
+        }
+
+        // Create breathing dots
+        function createBreathDots(count) {
+            breathDots.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'breath-dot';
+                dot.dataset.index = i;
+                breathDots.appendChild(dot);
+            }
+        }
+
+        // Animate breathing circle
+        function animateBreathCircle(targetSize, duration) {
+            const startSize = parseFloat(breathCircle.style.width) || 10;
+            const startTime = performance.now();
+            const maxSize = 300;
+            
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / (duration * 1000), 1);
+                
+                const currentSize = startSize + (targetSize - startSize) * progress;
+                breathCircle.style.width = `${currentSize}px`;
+                breathCircle.style.height = `${currentSize}px`;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        // Activate breathing dots sequentially
+        function activateBreathDots(count, duration) {
+            const dots = breathDots.querySelectorAll('.breath-dot');
+            const intervalMs = (duration * 1000) / count;
+            
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            let currentDot = 0;
+            const dotInterval = setInterval(() => {
+                if (currentDot < dots.length) {
+                    dots[currentDot].classList.add('active');
+                    currentDot++;
+                } else {
+                    clearInterval(dotInterval);
+                }
+            }, intervalMs);
+            
+            return dotInterval;
+        }
+
+        // Run breathing cycle
+        function runBreathingCycle() {
+            // CHECK DURATION AT START OF CYCLE
+            const cycleDuration = breathingCycleDuration;
+            
+            // Calculate unit duration from total cycle duration
+            const totalUnits = 19; // 4 + 7 + 8
+            const unitDuration = cycleDuration / totalUnits;
+            
+            let phase = 0;
+            
+            function nextPhase() {
+                if (phase === 0) {
+                    // Inhale: 4 units
+                    breathPhase.textContent = 'Inhale';
+                    createBreathDots(4);
+                    animateBreathCircle(300, unitDuration * 4);
+                    activateBreathDots(4, unitDuration * 4);
+                    breathingPhaseTimeout = setTimeout(nextPhase, unitDuration * 4 * 1000);
+                    phase = 1;
+                } else if (phase === 1) {
+                    // Hold: 7 units
+                    breathPhase.textContent = 'Hold';
+                    createBreathDots(7);
+                    // Circle stays at max size
+                    activateBreathDots(7, unitDuration * 7);
+                    breathingPhaseTimeout = setTimeout(nextPhase, unitDuration * 7 * 1000);
+                    phase = 2;
+                } else if (phase === 2) {
+                    // Exhale: 8 units
+                    breathPhase.textContent = 'Exhale';
+                    createBreathDots(8);
+                    animateBreathCircle(10, unitDuration * 8);
+                    activateBreathDots(8, unitDuration * 8);
+                    breathingPhaseTimeout = setTimeout(() => {
+                        // Start next cycle - will check duration again
+                        runBreathingCycle();
+                    }, unitDuration * 8 * 1000);
+                }
+            }
+            
+            // Start with inhale
+            nextPhase();
+        }
+
+        // Start breathing when Calm Down page is opened
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetPage = item.dataset.page;
+                
+                // Stop breathing if leaving calm page
+                if (targetPage !== 'calmPage') {
+                    if (breathingPhaseTimeout) {
+                        clearTimeout(breathingPhaseTimeout);
+                        breathingPhaseTimeout = null;
+                    }
+                }
+                
+                // Start breathing if entering calm page
+                if (targetPage === 'calmPage') {
+                    setTimeout(() => {
+                        breathCircle.style.width = '10px';
+                        breathCircle.style.height = '10px';
+                        runBreathingCycle();
+                    }, 100);
+                }
+            });
+        });
 
         // PWA installation
         let deferredPrompt;
