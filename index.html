@@ -137,13 +137,7 @@
             align-items: center;
             justify-content: center;
             padding: 0;
-            border-radius: 0;
             font-weight: 300;
-        }
-
-
-        .stepper-btn:active:not(:disabled) {
-            transform: scale(0.95);
         }
 
         .stepper-btn:disabled {
@@ -161,6 +155,31 @@
             color: var(--text-primary);
             padding: var(--padding-sm) auto;
             min-width: var(--button-height);
+        }
+
+        .select-btn {
+            flex: 0 0 auto;
+            width: 50%;
+            height: calc(var(--button-height) - 2 * var(--line-sm));
+            background: none;
+            color: var(--text-secondary);
+            border: none;
+            font-family: 'Fraunces', serif;
+            font-size: var(--text-lg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .selected { color: var(--accent-primary); }
+
+        .select-btn:disabled {
+            cursor: not-allowed;
+            opacity: var(--disabled-opacity);
         }
 
         .circular-timer {
@@ -245,12 +264,11 @@
             color: var(--bg-primary);
         }
 
-        .btn-primary:hover {
-            /* background: #ffdb70; */
+        .btn-primary:hover, .btn-secondary:hover, .btn-tertiary:hover, .btn-danger:hover, .stepper-btn:hover:not(:disabled), .select-btn:hover {
             transform: scale(1.05);
         }
 
-        .btn-primary:active {
+        .btn-primary:active, .btn-secondary:active, .btn-tertiary:active, .btn-danger:active, .stepper-btn:active:not(:disabled), .select-btn:active {
             transform: scale(0.95);
         }
 
@@ -259,27 +277,18 @@
             color: var(--accent-primary);
             border: var(--line-sm) solid var(--accent-primary);
         }
-
-        .btn-secondary:hover {
-            transform: scale(1.05);
+        
+        .btn-tertiary {
+            background: red;
+            color: var(--accent-primary);
         }
 
-        .btn-secondary:active {
-            transform: scale(0.95);
-        }
+        .btn-wide { width: 100%; }
 
         .btn-danger {
             background: var(--bg-secondary);
             color: var(--danger);
             border: var(--line-sm) solid var(--danger);
-        }
-
-        .btn-danger:hover {
-            transform: scale(1.05);
-        }
-
-        .btn-danger:active {
-            transform: scale(0.95);
         }
 
         .hidden {
@@ -418,32 +427,6 @@
             margin-top: 4px;
         }
 
-        .btn-add-habit {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 208, 80, 0.3);
-            transition: all 0.2s ease;
-            z-index: 50;
-        }
-
-        .btn-add-habit:hover {
-            transform: scale(1.1);
-        }
-
-        .btn-add-habit:active {
-            transform: scale(0.95);
-        }
 
         /* Context Menu */
         .context-menu {
@@ -715,15 +698,6 @@
         .nav-icon path {
             transition: fill 0.2s ease;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-
-        .pulse .circle-segment {
-            animation: pulse 0.6s ease;
-        }
     </style>
 </head>
 <body>
@@ -735,19 +709,27 @@
             <div class="input-group">
                 <label>Cycle (minutes)</label>
                 <div class="stepper-wrapper">
-                    <button class="stepper-btn" id="mainMinus">−</button>
-                    <div class="stepper-value" id="mainValue">10</div>
-                    <button class="stepper-btn" id="mainPlus">+</button>
+                    <button class="stepper-btn" id="timerCycleMinus">−</button>
+                    <div class="stepper-value" id="timerCycleValue">10</div>
+                    <button class="stepper-btn" id="timerCyclePlus">+</button>
                 </div>
             </div>
 
             <div class="input-group">
                 <label>Divisions</label>
                 <div class="stepper-wrapper">
-                    <button class="stepper-btn" id="secondaryMinus">−</button>
-                    <div class="stepper-value" id="secondaryValue">1</div>
-                    <button class="stepper-btn" id="secondaryPlus">+</button>
+                    <button class="stepper-btn" id="timerDivMinus">−</button>
+                    <div class="stepper-value" id="timerDivValue">1</div>
+                    <button class="stepper-btn" id="timerDivPlus">+</button>
                 </div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Sound Profile</label>
+            <div class="stepper-wrapper">
+                <button class="select-btn selected" id="soundProfileGong">Gong</button>
+                <button class="select-btn" id="soundProfileBowl">Bowl</button>
             </div>
         </div>
 
@@ -794,9 +776,9 @@
             <!-- Habits will be rendered here -->
         </div>
 
-        <button class="btn-add-habit" id="addHabitBtn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <button class="btn-icon btn-tertiary btn-wide" id="addHabitBtn">
+            <svg class="btn-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 6C17.1046 6 18 6.89543 18 8V14H24C25.1046 14 26 14.8954 26 16C26 17.1046 25.1046 18 24 18H18V24C18 25.1046 17.1046 26 16 26C14.8954 26 14 25.1046 14 24V18H8C6.89543 18 6 17.1046 6 16C6 14.8954 6.89543 14 8 14H14V8C14 6.89543 14.8954 6 16 6Z" fill="currentColor"/>
             </svg>
         </button>
 
@@ -869,9 +851,9 @@
             <div class="input-group">
                 <label>Duration (seconds)</label>
                 <div class="stepper-wrapper">
-                    <button class="stepper-btn" id="durationMinus">−</button>
-                    <div class="stepper-value" id="durationValue">20</div>
-                    <button class="stepper-btn" id="durationPlus">+</button>
+                    <button class="stepper-btn" id="breathDurationMinus">−</button>
+                    <div class="stepper-value" id="breathDurationValue">20</div>
+                    <button class="stepper-btn" id="breathDurationPlus">+</button>
                 </div>
             </div>
         </div>
@@ -933,8 +915,14 @@
         let nextMainTime;
         let mainCycleMs;
         let secondaryIntervalMs;
-        let currentMainValue = 10;
-        let currentSecondaryValue = 1;
+        let currentTimerCycleValue = 10;
+        let currentTimerDivValue = 1;
+        let currentSoundProfile = 0;
+
+        const soundProfiles = [
+            [() => playGong(432), () => playGong(339)],
+            [() => playSingingBowl(216), () => playSingingBowl(170)]
+        ];
 
         // Main cycle values: 1-10, then 15, 20, 25, 30...
         const mainCycleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -943,15 +931,17 @@
         }
 
         // Secondary values: 1-10
-        const secondaryValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        const timerDivValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
         // DOM elements
-        const mainValue = document.getElementById('mainValue');
-        const mainPlus = document.getElementById('mainPlus');
-        const mainMinus = document.getElementById('mainMinus');
-        const secondaryValue = document.getElementById('secondaryValue');
-        const secondaryPlus = document.getElementById('secondaryPlus');
-        const secondaryMinus = document.getElementById('secondaryMinus');
+        const timerCycleValue = document.getElementById('timerCycleValue');
+        const timerCyclePlus = document.getElementById('timerCyclePlus');
+        const timerCycleMinus = document.getElementById('timerCycleMinus');
+        const timerDivValue = document.getElementById('timerDivValue');
+        const timerDivPlus = document.getElementById('timerDivPlus');
+        const timerDivMinus = document.getElementById('timerDivMinus');
+        const soundProfileGong = document.getElementById('soundProfileGong');
+        const soundProfileBowl = document.getElementById('soundProfileBowl');
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const stopBtn = document.getElementById('stopBtn');
@@ -980,52 +970,85 @@
 
         // Update stepper buttons state
         function updateStepperButtons() {
-            const mainIndex = mainCycleValues.indexOf(currentMainValue);
-            mainMinus.disabled = mainIndex === 0 || isRunning || isPaused;
-            mainPlus.disabled = mainIndex === mainCycleValues.length - 1 || isRunning || isPaused;
+            const mainIndex = mainCycleValues.indexOf(currentTimerCycleValue);
+            timerCycleMinus.disabled = mainIndex === 0 || isRunning || isPaused;
+            timerCyclePlus.disabled = mainIndex === mainCycleValues.length - 1 || isRunning || isPaused;
 
-            const secondaryIndex = secondaryValues.indexOf(currentSecondaryValue);
-            secondaryMinus.disabled = secondaryIndex === 0 || isRunning || isPaused;
-            secondaryPlus.disabled = secondaryIndex === secondaryValues.length - 1 || isRunning || isPaused;
+            const secondaryIndex = timerDivValues.indexOf(currentTimerDivValue);
+            timerDivMinus.disabled = secondaryIndex === 0 || isRunning || isPaused;
+            timerDivPlus.disabled = secondaryIndex === timerDivValues.length - 1 || isRunning || isPaused;
         }
 
         // Main cycle stepper
-        mainPlus.addEventListener('click', () => {
-            const currentIndex = mainCycleValues.indexOf(currentMainValue);
+        timerCyclePlus.addEventListener('click', () => {
+            const currentIndex = mainCycleValues.indexOf(currentTimerCycleValue);
             if (currentIndex < mainCycleValues.length - 1) {
-                currentMainValue = mainCycleValues[currentIndex + 1];
-                mainValue.textContent = currentMainValue;
+                currentTimerCycleValue = mainCycleValues[currentIndex + 1];
+                timerCycleValue.textContent = currentTimerCycleValue;
                 updateStepperButtons();
             }
         });
 
-        mainMinus.addEventListener('click', () => {
-            const currentIndex = mainCycleValues.indexOf(currentMainValue);
+        timerCycleMinus.addEventListener('click', () => {
+            const currentIndex = mainCycleValues.indexOf(currentTimerCycleValue);
             if (currentIndex > 0) {
-                currentMainValue = mainCycleValues[currentIndex - 1];
-                mainValue.textContent = currentMainValue;
+                currentTimerCycleValue = mainCycleValues[currentIndex - 1];
+                timerCycleValue.textContent = currentTimerCycleValue;
                 updateStepperButtons();
             }
         });
 
         // Secondary cycle stepper
-        secondaryPlus.addEventListener('click', () => {
-            const currentIndex = secondaryValues.indexOf(currentSecondaryValue);
-            if (currentIndex < secondaryValues.length - 1) {
-                currentSecondaryValue = secondaryValues[currentIndex + 1];
-                secondaryValue.textContent = currentSecondaryValue;
+        timerDivPlus.addEventListener('click', () => {
+            const currentIndex = timerDivValues.indexOf(currentTimerDivValue);
+            if (currentIndex < timerDivValues.length - 1) {
+                currentTimerDivValue = timerDivValues[currentIndex + 1];
+                timerDivValue.textContent = currentTimerDivValue;
                 updateStepperButtons();
                 drawCircleSegments();
             }
         });
 
-        secondaryMinus.addEventListener('click', () => {
-            const currentIndex = secondaryValues.indexOf(currentSecondaryValue);
+        timerDivMinus.addEventListener('click', () => {
+            const currentIndex = timerDivValues.indexOf(currentTimerDivValue);
             if (currentIndex > 0) {
-                currentSecondaryValue = secondaryValues[currentIndex - 1];
-                secondaryValue.textContent = currentSecondaryValue;
+                currentTimerDivValue = timerDivValues[currentIndex - 1];
+                timerDivValue.textContent = currentTimerDivValue;
                 updateStepperButtons();
                 drawCircleSegments();
+            }
+        });
+
+
+        // Update sound profile buttons state
+        function updateSoundProfileButtons() {
+            soundProfileGong.disabled = isRunning || isPaused;
+            soundProfileBowl.disabled = isRunning || isPaused;
+
+            if (currentSoundProfile === 0) {
+                soundProfileGong.classList.add("selected");
+                soundProfileBowl.classList.remove("selected");
+            }
+            else if (currentSoundProfile === 1) {
+                soundProfileGong.classList.remove("selected");
+                soundProfileBowl.classList.add("selected");
+            }
+        }
+
+        // Sound profiles
+        soundProfileGong.addEventListener('click', () => {
+            soundProfiles[0][0]();
+            if (currentSoundProfile !== 0) {
+                currentSoundProfile = 0;
+                updateSoundProfileButtons();
+            }
+        });
+
+        soundProfileBowl.addEventListener('click', () => {
+            soundProfiles[1][0]();
+            if (currentSoundProfile !== 1) {
+                currentSoundProfile = 1;
+                updateSoundProfileButtons();
             }
         });
 
@@ -1037,9 +1060,9 @@
             const centerY = 100;
             const gapAngle = 0.15; // Larger gap size in radians (about 8.6 degrees)
             
-            for (let i = 0; i < currentSecondaryValue; i++) {
-                const startAngle = (i / currentSecondaryValue) * 2 * Math.PI + gapAngle / 2;
-                const endAngle = ((i + 1) / currentSecondaryValue) * 2 * Math.PI - gapAngle / 2;
+            for (let i = 0; i < currentTimerDivValue; i++) {
+                const startAngle = (i / currentTimerDivValue) * 2 * Math.PI + gapAngle / 2;
+                const endAngle = ((i + 1) / currentTimerDivValue) * 2 * Math.PI - gapAngle / 2;
                 
                 // Calculate arc path
                 const startX = centerX + radius * Math.cos(startAngle);
@@ -1078,73 +1101,124 @@
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
         }
-
-        // Play high bell sound (main cycle)
-        function playHighBell() {
+        function playGong(baseFreq = 600) {
             initAudio();
             const now = audioContext.currentTime;
-            
-            const osc1 = audioContext.createOscillator();
-            const osc2 = audioContext.createOscillator();
-            const osc3 = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            osc1.frequency.setValueAtTime(880, now); // A5
-            osc2.frequency.setValueAtTime(1320, now); // E6
-            osc3.frequency.setValueAtTime(1760, now); // A6
-            
-            osc1.type = 'sine';
-            osc2.type = 'sine';
-            osc3.type = 'sine';
-            
-            osc1.connect(gainNode);
-            osc2.connect(gainNode);
-            osc3.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            gainNode.gain.setValueAtTime(0.3, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 1.5);
-            
-            osc1.start(now);
-            osc2.start(now);
-            osc3.start(now);
-            osc1.stop(now + 1.5);
-            osc2.stop(now + 1.5);
-            osc3.stop(now + 1.5);
 
-            circleContainer.classList.add('pulse');
-            setTimeout(() => circleContainer.classList.remove('pulse'), 600);
+            const masterGain = audioContext.createGain();
+            masterGain.gain.setValueAtTime(0.0001, now); // start near zero
+            masterGain.gain.linearRampToValueAtTime(0.5, now + 0.01); // 10ms fade-in
+            masterGain.connect(audioContext.destination);
+
+            const ratios = [1.0, 0.5, 1.41, 1.93, 2.57, 3.16, 4.07];
+
+            ratios.forEach((r, i) => {
+                const osc = audioContext.createOscillator();
+                osc.type = "sine";
+
+                const gain = audioContext.createGain();
+
+                const freq = baseFreq * r;
+
+                // Softer pitch glide
+                osc.frequency.setValueAtTime(freq * 1.02, now);
+                osc.frequency.exponentialRampToValueAtTime(freq, now + 0.04);
+
+                // Independent decay
+                const decay = 4 + Math.random() * 4;
+
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.linearRampToValueAtTime(0.4 / (i + 1), now + 0.06); // gentle attack
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+
+                osc.connect(gain);
+                gain.connect(masterGain);
+
+                osc.start(now);
+                osc.stop(now + decay);
+
+                // ---- subtle detuned shimmer ----
+                const oscDetune = audioContext.createOscillator();
+                oscDetune.type = "sine";
+                oscDetune.frequency.setValueAtTime(freq * (1 + 0.005 * Math.random()), now);
+
+                const gainDetune = audioContext.createGain();
+                gainDetune.gain.setValueAtTime(0.15 / (i + 1), now);
+                gainDetune.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+
+                oscDetune.connect(gainDetune);
+                gainDetune.connect(masterGain);
+
+                oscDetune.start(now);
+                oscDetune.stop(now + decay);
+            });
         }
 
-        // Play low bell sound (secondary cycle)
-        function playLowBell() {
+        function playSingingBowl(baseFreq = 220) {
             initAudio();
             const now = audioContext.currentTime;
-            
-            const osc1 = audioContext.createOscillator();
-            const osc2 = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            osc1.frequency.setValueAtTime(440, now); // A4
-            osc2.frequency.setValueAtTime(660, now); // E5
-            
-            osc1.type = 'sine';
-            osc2.type = 'sine';
-            
-            osc1.connect(gainNode);
-            osc2.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            gainNode.gain.setValueAtTime(0.2, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 1.0);
-            
-            osc1.start(now);
-            osc2.start(now);
-            osc1.stop(now + 1.0);
-            osc2.stop(now + 1.0);
 
-            circleContainer.classList.add('pulse');
-            setTimeout(() => circleContainer.classList.remove('pulse'), 600);
+            const masterGain = audioContext.createGain();
+            masterGain.gain.setValueAtTime(0.0001, now);
+            masterGain.gain.linearRampToValueAtTime(0.6, now + 0.1); // slow bloom
+            masterGain.connect(audioContext.destination);
+
+            const modes = [
+                { ratio: 1.0, amp: 1.0 },
+                { ratio: 2.3, amp: 0.4 },
+                { ratio: 3.8, amp: 0.25 },
+                { ratio: 5.4, amp: 0.15 }
+            ];
+
+            modes.forEach((mode, i) => {
+                const freq = baseFreq * mode.ratio;
+                const decay = 6 + Math.random() * 3;
+
+                // Main oscillator
+                const osc = audioContext.createOscillator();
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(freq, now);
+
+                const gain = audioContext.createGain();
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.linearRampToValueAtTime(mode.amp * 0.5, now + 0.2);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+
+                osc.connect(gain);
+                gain.connect(masterGain);
+
+                osc.start(now);
+                osc.stop(now + decay);
+
+                // Detuned oscillator for slow beating
+                const detuneOsc = audioContext.createOscillator();
+                detuneOsc.type = "sine";
+                detuneOsc.frequency.setValueAtTime(freq * 1.003, now);
+
+                const detuneGain = audioContext.createGain();
+                detuneGain.gain.setValueAtTime(0.0001, now);
+                detuneGain.gain.linearRampToValueAtTime(mode.amp * 0.3, now + 0.2);
+                detuneGain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+
+                detuneOsc.connect(detuneGain);
+                detuneGain.connect(masterGain);
+
+                detuneOsc.start(now);
+                detuneOsc.stop(now + decay);
+            });
+
+            // Very slow global shimmer (subtle amplitude LFO)
+            const lfo = audioContext.createOscillator();
+            const lfoGain = audioContext.createGain();
+
+            lfo.frequency.value = 0.2; // very slow
+            lfoGain.gain.value = 0.05;
+
+            lfo.connect(lfoGain);
+            lfoGain.connect(masterGain.gain);
+
+            lfo.start(now);
+            lfo.stop(now + 10);
         }
 
         // Update display
@@ -1165,7 +1239,7 @@
             
             // Main cycle takes priority
             if (isAtMainCycle) {
-                playHighBell();
+                soundProfiles[currentSoundProfile][0]();
                 nextMainTime += mainCycleMs;
                 
                 // If the current secondary time would coincide with this main bell,
@@ -1176,7 +1250,7 @@
             }
             // Only play secondary if not at main cycle
             else if (isAtSecondaryCycle) {
-                playLowBell();
+                soundProfiles[currentSoundProfile][1]();
                 nextSecondaryTime += secondaryIntervalMs;
             }
         }
@@ -1191,8 +1265,8 @@
         function startTimer() {
             initAudio();
 
-            mainCycleMs = currentMainValue * 60 * 1000;
-            secondaryIntervalMs = mainCycleMs / currentSecondaryValue;
+            mainCycleMs = currentTimerCycleValue * 60 * 1000;
+            secondaryIntervalMs = mainCycleMs / currentTimerDivValue;
 
             isRunning = true;
             isPaused = false;
@@ -1203,9 +1277,10 @@
             nextSecondaryTime = secondaryIntervalMs;
 
             updateStepperButtons();
+            updateSoundProfileButtons();
             showButtons(pauseBtn);
             
-            playHighBell();
+            soundProfiles[currentSoundProfile][0]();
 
             timerInterval = setInterval(() => {
                 elapsedTime = Date.now() - startTime;
@@ -1223,6 +1298,7 @@
             
             showButtons(stopBtn, continueBtn);
             updateStepperButtons();
+            updateSoundProfileButtons();
         }
 
         // Continue timer
@@ -1233,6 +1309,7 @@
             
             showButtons(pauseBtn);
             updateStepperButtons();
+            updateSoundProfileButtons();
 
             timerInterval = setInterval(() => {
                 elapsedTime = Date.now() - startTime;
@@ -1251,6 +1328,7 @@
 
             showButtons(startBtn);
             updateStepperButtons();
+            updateSoundProfileButtons();
             
             updatePositionMarker(0);
         }
@@ -1760,28 +1838,28 @@
         let breathingPhaseTimeout = null;
 
         // DOM elements for Calm Down page
-        const durationValue = document.getElementById('durationValue');
-        const durationPlus = document.getElementById('durationPlus');
-        const durationMinus = document.getElementById('durationMinus');
+        const breathDurationValue = document.getElementById('breathDurationValue');
+        const breathDurationPlus = document.getElementById('breathDurationPlus');
+        const breathDurationMinus = document.getElementById('breathDurationMinus');
         const breathCircle = document.getElementById('breathCircle');
         const breathPhase = document.getElementById('breathPhase');
         const breathDots = document.getElementById('breathDots');
 
         // Duration stepper
-        if (durationPlus) {
-            durationPlus.addEventListener('click', () => {
+        if (breathDurationPlus) {
+            breathDurationPlus.addEventListener('click', () => {
                 if (breathingCycleDuration < 60) {
                     breathingCycleDuration++;
-                    durationValue.textContent = breathingCycleDuration;
+                    breathDurationValue.textContent = breathingCycleDuration;
                 }
             });
         }
 
-        if (durationMinus) {
-            durationMinus.addEventListener('click', () => {
+        if (breathDurationMinus) {
+            breathDurationMinus.addEventListener('click', () => {
                 if (breathingCycleDuration > 10) {
                     breathingCycleDuration--;
-                    durationValue.textContent = breathingCycleDuration;
+                    breathDurationValue.textContent = breathingCycleDuration;
                 }
             });
         }
